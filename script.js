@@ -73,3 +73,47 @@ hamburger.addEventListener("click", () => {
     navMenu.classList.toggle("active");
 
 });
+
+// movie modal
+const modalCards =
+    document.querySelectorAll(".movie-card");
+
+const modal =
+    document.getElementById("movieModal");
+
+const movieTitle =
+    document.getElementById("movieTitle");
+
+const movieDescription =
+    document.getElementById("movieDescription");
+
+const closeBtn =
+    document.querySelector(".close-btn");
+
+const modalImage =
+    document.getElementById("modalImage");
+
+modalCards.forEach(card => {
+
+    card.addEventListener("click", () => {
+
+        movieTitle.textContent =
+            card.dataset.title;
+
+        movieDescription.textContent =
+            card.dataset.description;
+
+        modalImage.src =
+            card.dataset.image;
+
+        modal.style.display = "flex";
+
+    });
+
+});
+
+closeBtn.addEventListener("click", () => {
+
+    modal.style.display = "none";
+
+});
