@@ -9,3 +9,6 @@ hamburger menu for mobile
 
 //day 4
 theme toggle mode
+
+//day 5
+making stylish movie card or modal card , on clicking showing description and title with the image of the movie.
