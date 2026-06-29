@@ -117,3 +117,82 @@ closeBtn.addEventListener("click", () => {
     modal.style.display = "none";
 
 });
+
+// my list
+const favButtons =
+    document.querySelectorAll(".fav-btn");
+
+const myListContainer =
+    document.getElementById("myListContainer");
+
+let favorites =
+    JSON.parse(
+        localStorage.getItem("favorites")
+    ) || [];
+
+function saveFavorites() {
+
+    localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
+    );
+
+}
+
+function displayFavorites() {
+
+    myListContainer.innerHTML = "";
+
+    favorites.forEach(movie => {
+
+        myListContainer.innerHTML += `
+
+        <div class="favorite-card">
+
+            <img src="${movie.image}">
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+favButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const movieCard =
+            button.closest(".movie-card");
+
+        const movie = {
+
+            title:
+                movieCard.dataset.title,
+
+            image:
+                movieCard.dataset.image
+
+        };
+
+        const exists =
+            favorites.some(
+                item => item.title === movie.title
+            );
+
+        if (!exists) {
+
+            favorites.push(movie);
+
+            saveFavorites();
+
+            displayFavorites();
+
+        }
+
+    });
+
+});
+
+displayFavorites();
