@@ -146,14 +146,33 @@ function displayFavorites() {
     favorites.forEach(movie => {
 
         myListContainer.innerHTML += `
+            <div class="favorite-card">
+                <img src="${movie.image}" alt="${movie.title}">
 
-        <div class="favorite-card">
-
-            <img src="${movie.image}">
-
-        </div>
-
+                <button class="remove-btn"
+                        data-title="${movie.title}">
+                    ❌
+                </button>
+            </div>
         `;
+    });
+
+    // HTML banne ke baad events attach karo
+    document.querySelectorAll(".remove-btn").forEach(btn => {
+
+        btn.addEventListener("click", () => {
+
+            favorites = favorites.filter(movie =>
+                movie.title !== btn.dataset.title
+            );
+
+            saveFavorites();
+
+            displayFavorites();
+
+            updateButtons();
+
+        });
 
     });
 
@@ -163,36 +182,72 @@ favButtons.forEach(button => {
 
     button.addEventListener("click", () => {
 
-        const movieCard =
-            button.closest(".movie-card");
+        const movieCard = button.closest(".movie-card");
 
         const movie = {
 
-            title:
-                movieCard.dataset.title,
-
-            image:
-                movieCard.dataset.image
+            title: movieCard.dataset.title,
+            image: movieCard.dataset.image
 
         };
 
-        const exists =
-            favorites.some(
-                item => item.title === movie.title
-            );
+        const index = favorites.findIndex(item =>
+            item.title === movie.title
+        );
 
-        if (!exists) {
+        if (index === -1) {
 
             favorites.push(movie);
 
-            saveFavorites();
+            button.textContent = "✔ Added";
+            button.style.background = "green";
 
-            displayFavorites();
+        } else {
+
+            favorites.splice(index, 1);
+
+            button.textContent = "❤️ My List";
+            button.style.background = "#333";
 
         }
+
+        saveFavorites();
+        displayFavorites();
 
     });
 
 });
 
 displayFavorites();
+
+function updateButtons() {
+
+    favButtons.forEach(button => {
+
+        const movieCard =
+            button.closest(".movie-card");
+
+        const title =
+            movieCard.dataset.title;
+
+        const exists =
+            favorites.some(movie => movie.title === title);
+
+        if (exists) {
+
+            button.textContent = "✔ Added";
+            button.style.background = "green";
+
+        } else {
+
+            button.textContent = "❤️ My List";
+            button.style.background = "#333";
+
+        }
+
+    });
+
+}
+
+displayFavorites();
+updateButtons();
