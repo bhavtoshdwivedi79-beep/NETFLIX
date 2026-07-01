@@ -15,3 +15,7 @@ making stylish movie card or modal card , on clicking showing description and ti
 
 //day 6
 adding my favourite list , when clicked in button the movie stored in local storage.
+
+//day 7
+in day 6 i have added my list but didn't add reove button so to improve user experience i added remove button
+
